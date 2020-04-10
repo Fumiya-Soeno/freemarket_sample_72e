@@ -1,12 +1,12 @@
 class ProductsController < ApplicationController
-  before_action :set_params, only: [:create]
+  before_action :set_params, only: [:create, :edit, :update]
   before_action :set_product, only: [:show, :buy, :destroy, :pay]
   before_action :authenticate_user!, except: [:index, :show]
   require 'payjp'
 
   def index
     @products = Product.includes(:images).order('created_at DESC')
-    @categorize = Product.where(category_id: 3).order('created_at DESC')
+    @categorise = Product.where(category_id: 1).order('created_at DESC')
   end
 
   def new
@@ -29,6 +29,18 @@ class ProductsController < ApplicationController
     @evaluation = Evaluation.where(user_id: @product.user)
     @images     = Image.where(product_id: @product.id)
   end
+
+  def edit
+    @product    = Product.find(params[:id])
+    # @image    = Image.find(params[:id])
+  end
+
+  def update
+    product = Product.find(params[:id])
+    product.update
+    
+  end
+
 
   def buy
     @address = Address.where(user_id: current_user.id)[0]

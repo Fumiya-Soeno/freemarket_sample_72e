@@ -141,9 +141,9 @@
           もっと見る  >
     .pick-lists
       .pick-list
-        - @categorize.first(6).each do |product|
-          = link_to "#" do
-            - Image.where(product_id: product.id).each.with_index(1) do |image,i|
+        - @categorise.first(6).each do |product|
+          = link_to product_path(product.id), data: {"turbolinks"=>false} do
+            - product.images.each.with_index(1) do |image,i|
               - if i == 1
                 = image_tag image.image, size: "220x180", alt: "QR" 
                 .pick-boby
