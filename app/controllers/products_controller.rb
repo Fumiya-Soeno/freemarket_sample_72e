@@ -7,10 +7,12 @@ class ProductsController < ApplicationController
   def index
     @products = Product.includes(:images).order('created_at DESC')
     @categorize = Product.where(category_id: 3).order('created_at DESC')
+    @parents = Category.all.order("id ASC")
   end
 
   def new
-    @products = Product.new
+    @product = Product.new
+    @image = Image.new
   end
 
   def create
@@ -18,12 +20,20 @@ class ProductsController < ApplicationController
     unless @product.save!
       redirect_to new_product_path
     end
+    for num in 1..10 do
+      unless params[:product][:image][":image#{num}"].nil?
+        @image = Image.new(image: params[:product][:image][":image#{num}"], product_id: @product.id)
+        unless @image.save!
+          redirect_to new_product_path
+        end
+      end
+    end
   end
 
   def show
     @user       = User.find(@product.user)
     @bland      = Bland.find(@product.bland)
-    @category   = Category.where(product_id: @product.id)
+    @category   = Category.find(@product.category_id)
     @condition  = Condition.find(@product.condition)
     @address    = Address.where(user_id: @product.user)
     @evaluation = Evaluation.where(user_id: @product.user)
@@ -101,8 +111,7 @@ class ProductsController < ApplicationController
   end
 
   def set_params
-    # ダミーです、商品出品と編集に使用します
-    params.require(:product).permit(:id, :explanation, :name, :region, :size, :price, :shipping_days, :postage, :created_at, :updated_at).merge(user_id: "1", condition_id: "1", category_id: "1", bland_id: "1")
+    params.require(:product).permit(:explanation, :name, :region, :size, :price, :shipping_days, :postage, :bland_id, :condition_id, :category_id, images_attributes:[:image]).merge(user_id: current_user.id)
   end
 
 end

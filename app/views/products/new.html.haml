@@ -1,137 +1,38 @@
-.wrapper
-  .new-header
-    = link_to root_path do
-      = image_tag 'logo.png'
-
-  .new-main
-    .image-wrapper
-      .image-wrapper__label
-        出品画像
-        %span.image-wrapper__label__tag 
-          必須
-      .image-wrapper__text
-        最大10枚までアップロードできます
-      .image-wrapper__image
-        = image_tag 'icon_camera.png', width: "100%"
-        .image-wrapper__image__content 
-          ドラッグアンドドロップ
-          %br/
-          またはクリックしてファイルをアップロード
-        %input.image-wrapper__image__file
-      
-    .item-wrapper
-      .item-wrapper__name
-        商品名
-        %span.item-wrapper__name__tag
-          必須
-      %input.item-wrapper__form{placeholder: "40文字まで"}
-      .item-wrapper__description
-        商品の説明
-        %span.item-wrapper__description__tag
-          必須
-      %textarea.item-wrapper__area{placeholder: '商品の説明（必須　1000文字以内）(色、素材、重さ、定価、注意点など) 例）2010年頃に1万円で購入したジャケットです。ライトグレーで傷はありません、合わせやすいのでおすすめです！',rows:"5"}
-      %p.item-wrapper__counter{id:"counter"}0/1000
-    .item-detail
-      .item-detail__name
-        商品の詳細
-      .item-detail__category
-        カテゴリー
-        %span.item-detail__category__tag
-          必須
-      %select.item-detail__select
-        %option{ value: ""}選択して下さい
-        %option{ value: "1"}メンズ
-        %option{ value: "2"}レディース
-        %option{ value: "3"}ベビー・キッズ
-        %option{ value: "4"}インテリア・住まい・小物
-        %option{ value: "5"}本・音楽・ゲーム
-        %option{ value: "6"}おもちゃ・ホビー・グッズ
-        %option{ value: "7"}コスメ・香水・美容
-        %option{ value: "8"}家電・スマホ・カメラ
-        %option{ value: "9"}スポーツ・レジャー
-        %option{ value: "10"}ハンドメイド
-        %option{ value: "11"}チケット
-        %option{ value: "12"}自動車・オートバイ
-        %option{ value: "13"}その他
-      .item-detail__brand
-        ブランド
-        %span.item-detail__brand__tag
-          任意
-      %input.item-detail__form{placeholder: "例）シャネル"}
-      .item-detail__status
-        商品の状態
-        %span.item-detail__status__tag
-          必須
-      %select.item-detail__form
-        %option{ value: ""}選択して下さい
-        %option{ value: "1"}新品、未使用
-        %option{ value: "2"}未使用に近い
-        %option{ value: "3"}目立った傷や汚れなし
-        %option{ value: "4"}やや傷や汚れあり
-        %option{ value: "5"}傷や汚れあり
-        %option{ value: "6"}全体的に状態が悪い
-    .item-cost
-      .item-cost__about
-        配送について
-      .item-cost__name
-        配送料の負担
-        %span.item-cost__name__tag
-          必須
-      %select.item-cost__burden
-        %option{ value: ""} 選択して下さい
-        %option{ value: "1"} 送料込み(出品者負担)
-        %option{ value: "2"} 着払い(購入者負担)
-      .item-cost__area
-        発送元の地域
-        %span.item-cost__area__tag
-          必須
-      %select.item-cost__area__form
-        %option{ value: ""} 選択して下さい
-        %option{ value: "1"} 東京
-        %option{ value: "2"} 大阪
-
-      .item-cost__days
-        発送までの日数
-        %span.item-cost__days__tag
-          必須
-      %select.item-cost__select
-        %option{ value: ""}選択して下さい
-        %option{ value: "1"}1~2日で発送
-        %option{ value: "2"}2~3日で発送
-        %option{ value: "3"}4~7日で発送
-    
-    .item-price
-      .item-price__about
-        価格(¥300~9,999,999)
-      .item-price__name
-        販売価格
-        %span.item-price__name__tag
-          必須
-        %span.item-price__name__mark
-          ¥
-        %input.item-price__name__form{placeholder: "0"}
-      .item-price__commission 
-        販売手数料(10%)
-        %span.item-price__commission__value
-          ー
-      .item-price__profit
-        販売利益
-        %span.item-price__profit__value
-          ー
-
-    .item-exhibition
-      %button.item-exhibition__btn{type: 'submit'}
-        出品する
-      .item-exhibition__back
-        %a{href: "http://18.180.222.87/"} もどる
-      .item-exhibition__text
-      禁止されている行為および出品物を必ずご確認ください。偽ブランド品や盗品物などの販売は犯罪であり、法律により処罰される可能性があります。 また、出品をもちまして加盟店規約に同意したことになります。
-    
-    .item-footer
-      %ul.item-footer_list
-        %li プライバシーポリシー
-        %li メルカリ利用規約
-        %li 特定商取引に関する表記
-    .item-logo
-      = link_to root_path do
-        = image_tag 'logo-white.png'
+= form_for @product do |f|
+  %br
+  = f.label "商品名"
+  = f.text_field :name ,value: "商品名"
+  %br
+  = f.label "商品の説明"
+  = f.text_field :explanation, value: "商品説明"
+  %br
+  = f.label "カテゴリー"
+  = f.select :category_id, [["レディース", 1], ["メンズ", 2], ["その他", 3]]
+  %br
+  = f.label "ブランド"
+  = f.select :bland_id, [["ナイキ", 1], ["コンバース", 2], ["その他", 3]]
+  %br
+  = f.label "商品の状態"
+  = f.select :condition_id, [["新品", 1], ["中古", 2]]
+  %br
+  = f.label "配送料の負担"
+  = f.select :postage, [["送料込み(あなたが負担)", true], ["送料別(購入者が負担)", false]]
+  %br
+  = f.label "発送元の地域"
+  = f.select :region, [["東京都", "東京都"], ["大阪府", "大阪府"], ["それ以外", "それ以外"]]
+  %br
+  = f.label "発送までの日数"
+  = f.text_field :shipping_days, value: 1
+  %br
+  = f.label "サイズ"
+  = f.text_field :size, value: "M"
+  %br
+  = f.label "販売価格"
+  = f.text_field :price, value: "1000"
+  %br
+  = f.fields_for @image do |i|
+    - for num in 1..10
+      = i.label "画像#{num}"
+      = i.text_field ":image#{num}", value: ""
+      %br
+  = f.submit "商品を登録する"

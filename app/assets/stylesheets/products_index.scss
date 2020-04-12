@@ -95,11 +95,30 @@ body {
       display: flex;
       &--left {
         position: relative;
+        padding-left: 30px;
         p {
             padding-right: 20px;
             margin: 15px 0;
           }
-      
+        .parent-box{
+          display: none;
+          z-index: 2;
+          position: absolute;
+          bottom: -240px;
+          left: -12px;
+          border: 1px solid #999;
+          background-color: #fff;
+          &__parent{
+            width: 500px;
+            padding: 0px 10px;
+            &__child{
+              padding: 0px 10px;
+              &__grandchild{
+                padding: 0px 10px;
+              }
+            }
+          }
+        }
         ul {
           position: relative;
           display: flex;

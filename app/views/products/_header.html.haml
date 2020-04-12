@@ -12,7 +12,24 @@
       .header__inner__nav--left
         %ul 
           %ls
-          %p カテゴリ
+          %p#category-hover カテゴリ
+          .parent-box
+            - @parents.each do |parent|
+              - if parent.ancestry == nil
+                = link_to "category/#{parent.id}" do
+                  .parent-box__parent
+                    = parent.name
+                    %br
+                - parent.children.each do |child|
+                  = link_to "category/#{child.id}" do
+                    .parent-box__parent__child
+                      = "> " + child.name
+                      %br
+                  - child.children.each do |grandchild|
+                    = link_to "category/#{grandchild.id}" do
+                      .parent-box__parent__child__grandchild
+                        = ">> " + grandchild.name
+                        %br
           %p ブランド
       .header__inner__nav--right
         %ul

@@ -1,0 +1,9 @@
+$(function(){
+  $("#category-hover").hover(function(){
+    console.log("on-hover");
+    $(".parent-box").css("display","block");
+    $(".parent-box").hover(function(){},function(){
+      $(this).css("display","none");
+    })
+  })
+})
